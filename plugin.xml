@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    id="com.qiudao.cordova.weibo" version="0.9">
+    <name>Weibo</name>
+    <description>Cordova plugin for Weibo SDK</description>
+    <author>Baomingba</author>
+    <license>Apache 2.0</license>
+    <keywords>cordova,plugin,weibo</keywords>
+    <repo>https://github.com/BelinChung/cordova-plugin-weibo</repo>
+    <js-module src="www/weibo.js" name="Weibo">
+        <clobbers target="Weibo" />
+    </js-module>
+
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="Weibo">
+                <param name="ios-package" value="CDVWeibo"/>
+            </feature>
+        </config-file>
+        <config-file target="*-Info.plist" parent="CFBundleURLTypes">
+            <array>
+                <dict>
+                    <key>CFBundleTypeRole</key>
+                    <string>Editor</string>
+                    <key>CFBundleURLName</key>
+                    <string>com.weibo</string>
+                    <key>CFBundleURLSchemes</key>
+                    <array>
+                        <string>YOUR_WEIBO_APP_ID</string>
+                    </array>
+                </dict>
+            </array>
+        </config-file>
+
+        <header-file src="src/ios/CDVWeibo.h" />
+        <source-file src="src/ios/CDVWeibo.m" />
+        <header-file src="src/ios/AppDelegate+weibo.h" />
+        <source-file src="src/ios/AppDelegate+weibo.m" />
+
+        <!-- lib files -->
+        <header-file src="src/ios/libs/WeiboSDK.h" />
+        <header-file src="src/ios/libs/WBHttpRequest.h" />
+        <header-file src="src/ios/libs/WBHttpRequest+WeiboUser.h" />
+        <header-file src="src/ios/libs/WBHttpRequest+WeiboShare.h" />
+        <header-file src="src/ios/libs/WBHttpRequest+WeiboToken.h" />
+        <header-file src="src/ios/libs/WBSDKRelationshipButton.h" />
+        <header-file src="src/ios/libs/WBSDKCommentButton.h" />
+        <header-file src="src/ios/libs/WBSDKBasicButton.h" />
+        <source-file src="src/ios/libs/libWeiboSDK.a" framework="true" />
+        <resource-file src="src/ios/libs/WeiboSDK.bundle" />
+
+        <framework src="QuartzCore.framework" weak="true"/>
+        <framework src="Security.framework" weak="true"/>
+        <framework src="ImageIO.framework" weak="true"/>
+        <framework src="SystemConfiguration.framework" weak="true" />
+        <framework src="Security.framework" weak="true" />
+    </platform>
+
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="Weibo" >
+                <param name="android-package" value="com.qiudao.cordova.weibo.Weibo"/>
+            </feature>
+        </config-file>
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+          <activity android:name="com.sina.weibo.sdk.component.WeiboSdkBrowser"
+                    android:configChanges="keyboardHidden|orientation"
+                    android:windowSoftInputMode="adjustResize"
+                    android:exported="false" 
+                    android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+          </activity>
+        </config-file>
+
+        <source-file src="src/android/Weibo.java" target-dir="src/com/qiudao/cordova/weibo" />
+
+        <source-file src="src/android/libs/weibosdkcore_v3.0.1.jar" target-dir="libs" framework="true" />
+        <source-file src="src/android/libs/libweibosdkcore.so" target-dir="libs" />
+    </platform>
+</plugin>
